@@ -59,8 +59,8 @@ def pocet_velkych_pismen(text):
     
     #počítání velkých písmen   
     pocet_velkych = 0
-    for i in text_splited: 
-        b=i[0] # první znak stringu
+    for x in text_splited: 
+        b=x[0] # první znak stringu
         if b>='A' and b<='Z':
             pocet_velkych+=1
     print(f'Celkový počet slov začínajících velkým písmenem {pocet_velkych}')  
@@ -79,8 +79,8 @@ def pocet_velkych_pismen(text):
 def pocet_malych_pismen(text):
     text_splited = text.split()   
     pocet_malych = 0
-    for i in text_splited: 
-        b=i[0]
+    for x in text_splited: 
+        b=x[0]
         if b>='a' and b<='z':
             pocet_malych+=1
     print(f'Počet slov začínajících malým písmenem: {pocet_malych}')
@@ -89,8 +89,8 @@ def pocet_malych_pismen(text):
 def pocet_num(text):
     text_splited = text.split()   
     pocet_num = 0
-    for i in text_splited: 
-        b=i[0]
+    for x in text_splited: 
+        b=x[0]
         if b>='1' and b<='9':
             pocet_num+=1
     print(f'Počet numerických stringů: {pocet_num}') 
@@ -99,12 +99,12 @@ def suma_num(text):
     text_splited = text.split()   
     suma_num = 0
     numeric_list = []
-    for i in text_splited: 
-        b=i[0]
+    for x in text_splited: 
+        b=x[0]
         if b>='1' and b<='9':
-            numeric_list.append(int(i))        
-    for i in numeric_list:
-        suma_num += i
+            numeric_list.append(int(x))        
+    for y in numeric_list:
+        suma_num += y
     print(f'Suma všech čísel obsažených v textu: {suma_num}') 
 
 
@@ -114,8 +114,8 @@ def analyza_poctu_znaku(text):
     text_bez_carek = text_bez_tecek.replace(",","") #odstraní z textu čárky
     cisty_text = text_bez_carek.split() #rozbije text na slova
     delka_slova = [] #prázdný text do kterého se bude ukládat délka slova
-    for i in cisty_text: 
-        delka_slova.append(int((len(i)))) #zjistí délku slova a přidá jí do listu delka_slova
+    for x in cisty_text: 
+        delka_slova.append(int((len(x)))) #zjistí délku slova a přidá jí do listu delka_slova
     delka_slova.sort() #seřadí naplněný list podle velikosti
     
     pocet_1 = delka_slova.count(1)
@@ -175,8 +175,8 @@ uzivatelska_jmena = users_registered.keys()
 
 #KONTROLA REGISTROVANÉHO UŽIVATELE
 user_name = str(input('Zadejte uživatelské jméno:'))
-for i in uzivatelska_jmena: 
-    if i == user_name:
+for x in uzivatelska_jmena: 
+    if x == user_name:
         print(f'{user_name} je registrovaný uživatel!!!')
         break
 else:
@@ -186,9 +186,9 @@ else:
 #KONTROLA HESLA
 password = str(input('Zadejte prosím heslo:'))
 if password == users_registered.get(user_name): #kontrola správnosti hesla
-    print('Heslo zadáno správně')
+    print('Heslo zadáno správně!!!')
 else:
-    print('Heslo zadáno špatně')
+    print('Heslo zadáno špatně!!!')
     exit()
 
 print('-'* 50)
@@ -236,6 +236,4 @@ elif user_choice == '3':
 else: 
     print('Tento text neexistuje!!!')
     exit()
-    
-zkousim_git = "zkouska"
 
