@@ -45,34 +45,40 @@ first_text = TEXTS[0]
 second_text = TEXTS[1]
 third_text = TEXTS[2]
 
+ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
+ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+digits = '0123456789'
+
+lowercase_list = list(ascii_lowercase)
+uppercase_list = list(ascii_uppercase)
+digits_list = list(digits)
+
 #ANALÝZA FCE
 #počítání slov
 def word_counter(text): 
     text_splited = text.split() #rozsekání textu na jednotlivá slova a uložení do listu text_splited
     pocet_slov = len(text_splited)
-    print(f'Počet slov v textu: {pocet_slov}')
+    print(f'Ve vybraném textu je {pocet_slov} slov')
 
 
 #počítání velkých písmen   
 def pocet_velkych_pismen(text):
-    text_splited = text.split()
-    
-    #počítání velkých písmen   
+    text_splited = text.split()  
     pocet_velkych = 0
+    pouze_velka_pismena = 0 
+    
     for x in text_splited: 
         b=x[0] # první znak stringu
-        if b>='A' and b<='Z':
-            pocet_velkych+=1
-    print(f'Celkový počet slov začínajících velkým písmenem {pocet_velkych}')  
+        if b in uppercase_list:
+            pocet_velkych += 1
     
-    #počítání vět, tedy slov začínajících velkým pismenem    
-    text_splited = text.split(". ") #text rozdělený do vět
-    pocet_vet = len(text_splited)
-    print(f'Počet slov začínajících velkým písmenem: {pocet_vet}')
+    for x in text_splited:
+        if x.isupper():
+            pouze_velka_pismena += 1
     
-    #počítání názvů
-    nazev = pocet_velkych - pocet_vet
-    print(f'Počet názvů: {nazev}')
+     
+    print(f'Počet slov začínajících velkým písmenem: {pocet_velkych-pouze_velka_pismena}')
+    print(f'Počet slov obsahujících pouze velká písmena: {pouze_velka_pismena}')
     
     
 #počítání malých písmen   
@@ -81,7 +87,7 @@ def pocet_malych_pismen(text):
     pocet_malych = 0
     for x in text_splited: 
         b=x[0]
-        if b>='a' and b<='z':
+        if b in lowercase_list:
             pocet_malych+=1
     print(f'Počet slov začínajících malým písmenem: {pocet_malych}')
     
@@ -91,7 +97,7 @@ def pocet_num(text):
     pocet_num = 0
     for x in text_splited: 
         b=x[0]
-        if b>='1' and b<='9':
+        if b in digits_list:
             pocet_num+=1
     print(f'Počet numerických stringů: {pocet_num}') 
     
@@ -101,7 +107,7 @@ def suma_num(text):
     numeric_list = []
     for x in text_splited: 
         b=x[0]
-        if b>='1' and b<='9':
+        if b in digits_list:
             numeric_list.append(int(x))        
     for y in numeric_list:
         suma_num += y
@@ -113,7 +119,7 @@ def analyza_poctu_znaku(text):
     text_bez_tecek = text.replace(".","") #odstraní z textu tečky
     text_bez_carek = text_bez_tecek.replace(",","") #odstraní z textu čárky
     cisty_text = text_bez_carek.split() #rozbije text na slova
-    delka_slova = [] #prázdný text do kterého se bude ukládat délka slova
+    delka_slova = [] #prázdný list do kterého se bude ukládat délka jednotlivých slov
     for x in cisty_text: 
         delka_slova.append(int((len(x)))) #zjistí délku slova a přidá jí do listu delka_slova
     delka_slova.sort() #seřadí naplněný list podle velikosti
@@ -166,15 +172,12 @@ def analyza_poctu_znaku(text):
     if pocet_15 != 0:
         print("15|", "*"*pocet_15, "|",pocet_15)
     
-    
+#KONTROLA REGISTROVANÉHO UŽIVATELE   
 uzivatelska_jmena = users_registered.keys()
 '''uložení uživatelských jmen do listu jménem uzivatelska_jmena pro následnou kontrolu,
 že se nacházejí v dictionary users_registered'''
 
-
-
-#KONTROLA REGISTROVANÉHO UŽIVATELE
-user_name = str(input('Zadejte uživatelské jméno:'))
+user_name = str(input('Zadejte uživatelské jméno: '))
 for x in uzivatelska_jmena: 
     if x == user_name:
         print(f'{user_name} je registrovaný uživatel!!!')
@@ -184,53 +187,54 @@ else:
         exit()
 
 #KONTROLA HESLA
-password = str(input('Zadejte prosím heslo:'))
+password = str(input('Zadejte prosím heslo: '))
 if password == users_registered.get(user_name): #kontrola správnosti hesla
-    print('Heslo zadáno správně!!!')
+    print('Heslo je správně!!!')
 else:
-    print('Heslo zadáno špatně!!!')
+    print('Heslo je špatně!!!')
     exit()
 
-print('-'* 50)
-print(f'Aplikace Textový analizátor vítá uživatele {user_name}')
-print('-'* 50)
-user_choice = str(input('Máme 3 texty k analýze, máte na výběr z možností 1 až 3:'))
-print('-'* 50)
+print('='* 50, '\n')
+print(f'Aplikace Textový analizátor vítá uživatele {user_name} \n')
+print('='* 50, '\n')
+
+user_choice = str(input('Existují 3 texty, které lze analyzovat.\n\nVyberte prosím jednu z možostí 1 až 3: '))
+print('='* 50, '\n')
 if user_choice == '1':
-    print('Analýza textu č.1:\n')
+    print('Analýza textu č.1:')
     word_counter(first_text)
     pocet_velkych_pismen(first_text)
     pocet_malych_pismen(first_text)
     pocet_num(first_text)
     suma_num(first_text)
-    print('-'* 50)
+    print('='* 50)
     analyza_poctu_znaku(first_text)
-    print('-'* 50)
+    print('='* 50)
     
     
     
 elif user_choice == '2':
-    print('Analýza textu č.2:\n')
+    print('Analýza textu č.2:')
     word_counter(second_text)
     pocet_velkych_pismen(second_text)
     pocet_malych_pismen(second_text)
     pocet_num(second_text)
     suma_num(second_text)
-    print('-'* 50)
+    print('='* 50)
     analyza_poctu_znaku(second_text)
-    print('-'* 50)
+    print('='* 50)
     
     
 elif user_choice == '3':
-    print('Analýza textu č.3:\n')
+    print('Analýza textu č.3:')
     word_counter(third_text)
     pocet_velkych_pismen(third_text)
     pocet_malych_pismen(third_text)
     pocet_num(third_text)
     suma_num(third_text)
-    print('-'* 50)
+    print('='* 50)
     analyza_poctu_znaku(third_text)
-    print('-'* 50)
+    print('='* 50)
     
     
 else: 
