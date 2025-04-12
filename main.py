@@ -76,7 +76,6 @@ def pocet_velkych_pismen(text):
         if x.isupper():
             pouze_velka_pismena += 1
     
-     
     print(f'Počet slov začínajících velkým písmenem: {pocet_velkych-pouze_velka_pismena}')
     print(f'Počet slov obsahujících pouze velká písmena: {pouze_velka_pismena}')
     
