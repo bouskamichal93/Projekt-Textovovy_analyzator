@@ -4,7 +4,7 @@ projekt_1.py: první projekt do Engeto Online Python Akademie
 author: Michal Bouška
 email: michal.bouska93@gmail.com
 """
-
+from collections import Counter
 #DATA
 #registrovaní uživatelé
 users_registered = {
@@ -41,18 +41,6 @@ TEXTS = [
     in modern oceans. Other fish such as paddlefish,
     garpike and stingray are also present.''']
 
-first_text = TEXTS[0]
-second_text = TEXTS[1]
-third_text = TEXTS[2]
-
-ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
-ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-digits = '0123456789'
-
-lowercase_list = list(ascii_lowercase)
-uppercase_list = list(ascii_uppercase)
-digits_list = list(digits)
-
 #ANALÝZA FCE
 #počítání slov
 def word_counter(text): 
@@ -69,7 +57,7 @@ def pocet_velkych_pismen(text):
     
     for x in text_splited: 
         b=x[0] # první znak stringu
-        if b in uppercase_list:
+        if b in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
             pocet_velkych += 1
     
     for x in text_splited:
@@ -86,7 +74,7 @@ def pocet_malych_pismen(text):
     pocet_malych = 0
     for x in text_splited: 
         b=x[0]
-        if b in lowercase_list:
+        if b in 'abcdefghijklmnopqrstuvwxyz':
             pocet_malych+=1
     print(f'Počet slov začínajících malým písmenem: {pocet_malych}')
     
@@ -96,22 +84,21 @@ def pocet_num(text):
     pocet_num = 0
     for x in text_splited: 
         b=x[0]
-        if b in digits_list:
+        if b in '0123456789':
             pocet_num+=1
     print(f'Počet numerických stringů: {pocet_num}') 
     
 def suma_num(text):
     text_splited = text.split()   
-    suma_num = 0
+    suma_cisel = 0
     numeric_list = []
     for x in text_splited: 
         b=x[0]
-        if b in digits_list:
+        if b in '0123456789':
             numeric_list.append(int(x))        
     for y in numeric_list:
-        suma_num += y
-    print(f'Suma všech čísel obsažených v textu: {suma_num}') 
-
+        suma_cisel += y
+    print(f'Suma všech čísel obsažených v textu: {suma_cisel}') 
 
 
 def analyza_poctu_znaku(text):
@@ -122,54 +109,16 @@ def analyza_poctu_znaku(text):
     for x in cisty_text: 
         delka_slova.append(int((len(x)))) #zjistí délku slova a přidá jí do listu delka_slova
     delka_slova.sort() #seřadí naplněný list podle velikosti
-    
-    pocet_1 = delka_slova.count(1)
-    pocet_2 = delka_slova.count(2)
-    pocet_3 = delka_slova.count(3)
-    pocet_4 = delka_slova.count(4)
-    pocet_5 = delka_slova.count(5)
-    pocet_6 = delka_slova.count(6)
-    pocet_7 = delka_slova.count(7)
-    pocet_8 = delka_slova.count(8)
-    pocet_9 = delka_slova.count(9)
-    pocet_10 = delka_slova.count(10)
-    pocet_11 = delka_slova.count(11)
-    pocet_12 = delka_slova.count(12)
-    pocet_13 = delka_slova.count(13)
-    pocet_14 = delka_slova.count(14)
-    pocet_15 = delka_slova.count(15)
-    
-    print ("DÉLKA SLOVA|\tVÝSKYT\t|POČET")
-    if pocet_1 != 0:
-        print("1|", "*"*pocet_1, "|",pocet_1)
-    if pocet_2 != 0:
-        print("2|", "*"*pocet_2, "|",pocet_2)
-    if pocet_3 != 0:
-        print("3|", "*"*pocet_3, "|",pocet_3)
-    if pocet_4 != 0:
-        print("4|", "*"*pocet_4, "|",pocet_4)
-    if pocet_5 != 0:
-        print("5|", "*"*pocet_5, "|",pocet_5)
-    if pocet_6 != 0:
-        print("6|", "*"*pocet_6, "|",pocet_6)
-    if pocet_7 != 0:
-        print("7|", "*"*pocet_7, "|",pocet_7)
-    if pocet_8 != 0:
-        print("8|", "*"*pocet_8, "|",pocet_8)
-    if pocet_9 != 0:
-        print("9|", "*"*pocet_9, "|",pocet_9)
-    if pocet_10 != 0:
-        print("10|", "*"*pocet_10, "|",pocet_10)
-    if pocet_11 != 0:
-        print("11|", "*"*pocet_11, "|",pocet_11)
-    if pocet_12 != 0:
-        print("12|", "*"*pocet_12, "|",pocet_12)
-    if pocet_13 != 0:
-        print("13|", "*"*pocet_13, "|",pocet_13)
-    if pocet_14 != 0:
-        print("14|", "*"*pocet_14, "|",pocet_14)
-    if pocet_15 != 0:
-        print("15|", "*"*pocet_15, "|",pocet_15)
+    hodnoty = Counter(delka_slova)
+    hodnoty_dict = dict(hodnoty)        
+    print ("DÉLKA SLOVA|VÝSKYT|POČET")
+    for x, y in hodnoty_dict.items():
+        if x <10:
+            print(x,format('*'* y, ' <25'), y, sep=' |')
+        else:
+            print(x,format('*'* y, ' <26'), y, sep='|')
+        
+        
     
 #KONTROLA REGISTROVANÉHO UŽIVATELE   
 uzivatelska_jmena = users_registered.keys()
@@ -199,44 +148,49 @@ print('='* 50, '\n')
 
 user_choice = str(input('Existují 3 texty, které lze analyzovat.\n\nVyberte prosím jednu z možostí 1 až 3: '))
 print('='* 50, '\n')
-if user_choice == '1':
+if user_choice not in '0123456789':
+    print('Zadaná hodnota musí být číslo!!!')
+    exit()
+    
+elif user_choice == '1':
     print('Analýza textu č.1:')
-    word_counter(first_text)
-    pocet_velkych_pismen(first_text)
-    pocet_malych_pismen(first_text)
-    pocet_num(first_text)
-    suma_num(first_text)
+    word_counter(TEXTS[0])
+    pocet_velkych_pismen(TEXTS[0])
+    pocet_malych_pismen(TEXTS[0])
+    pocet_num(TEXTS[0])
+    suma_num(TEXTS[0])
     print('='* 50)
-    analyza_poctu_znaku(first_text)
+    analyza_poctu_znaku(TEXTS[0])
     print('='* 50)
     
     
     
 elif user_choice == '2':
     print('Analýza textu č.2:')
-    word_counter(second_text)
-    pocet_velkych_pismen(second_text)
-    pocet_malych_pismen(second_text)
-    pocet_num(second_text)
-    suma_num(second_text)
+    word_counter(TEXTS[1])
+    pocet_velkych_pismen(TEXTS[1])
+    pocet_malych_pismen(TEXTS[1])
+    pocet_num(TEXTS[1])
+    suma_num(TEXTS[1])
     print('='* 50)
-    analyza_poctu_znaku(second_text)
+    analyza_poctu_znaku(TEXTS[1])
     print('='* 50)
     
     
 elif user_choice == '3':
     print('Analýza textu č.3:')
-    word_counter(third_text)
-    pocet_velkych_pismen(third_text)
-    pocet_malych_pismen(third_text)
-    pocet_num(third_text)
-    suma_num(third_text)
+    word_counter(TEXTS[2])
+    pocet_velkych_pismen(TEXTS[2])
+    pocet_malych_pismen(TEXTS[2])
+    pocet_num(TEXTS[2])
+    suma_num(TEXTS[2])
     print('='* 50)
-    analyza_poctu_znaku(third_text)
+    analyza_poctu_znaku(TEXTS[2])
     print('='* 50)
     
     
 else: 
     print('Tento text neexistuje!!!')
     exit()
+    
 
