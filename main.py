@@ -43,13 +43,13 @@ TEXTS = [
 
 #ANALÝZA FCE
 #počítání slov
-def text_preparation(text:str) -> list:
+def text_priprava(text:str) -> list:
     text_without_dots = text.replace(".","") #odstraní z textu tečky
     text_without_commas = text_without_dots.replace(",","") #odstraní z textu čárky
     cisty_text = text_without_commas.split() #rozbije text na list slov
     return cisty_text
 
-def word_counter(text:list) -> int: 
+def pocitani_slov(text:list) -> int: 
     pocet_slov = len(text)
     print(f'Ve vybraném textu je {pocet_slov} slov')
 
@@ -106,7 +106,7 @@ def analyza_poctu_znaku(text:list) -> dict:
     hodnoty = Counter(delka_slova)
     
     hodnoty_dict = dict(hodnoty)        
-    print ("DÉLKA SLOVA|VÝSKYT|POČET")
+    print ('DÉLKA SLOVA', 'VÝSKYT', 'POČET', sep='   |   ')
     for x, y in hodnoty_dict.items():
         if x <10:
             print(x,format('*'* y, ' <25'), y, sep=' |')
@@ -147,35 +147,35 @@ if user_choice not in '0123456789':
     
 elif user_choice == '1':
     print('Analýza textu č.1:')
-    word_counter(text_preparation(TEXTS[0]))
-    pocet_velkych_pismen(text_preparation(TEXTS[0]))
-    pocet_malych_pismen(text_preparation(TEXTS[0]))
-    pocet_num(text_preparation(TEXTS[0]))
-    suma_num(text_preparation(TEXTS[0]))
+    pocitani_slov(text_priprava(TEXTS[0]))
+    pocet_velkych_pismen(text_priprava(TEXTS[0]))
+    pocet_malych_pismen(text_priprava(TEXTS[0]))
+    pocet_num(text_priprava(TEXTS[0]))
+    suma_num(text_priprava(TEXTS[0]))
     print('='* 50)
-    analyza_poctu_znaku(text_preparation(TEXTS[0]))
+    analyza_poctu_znaku(text_priprava(TEXTS[0]))
     print('='* 50)
     
 elif user_choice == '2':
     print('Analýza textu č.2:')
-    word_counter(text_preparation(TEXTS[1]))
-    pocet_velkych_pismen(text_preparation(TEXTS[1]))
-    pocet_malych_pismen(text_preparation(TEXTS[1]))
-    pocet_num(text_preparation(TEXTS[1]))
-    suma_num(text_preparation(TEXTS[1]))
+    pocitani_slov(text_priprava(TEXTS[1]))
+    pocet_velkych_pismen(text_priprava(TEXTS[1]))
+    pocet_malych_pismen(text_priprava(TEXTS[1]))
+    pocet_num(text_priprava(TEXTS[1]))
+    suma_num(text_priprava(TEXTS[1]))
     print('='* 50)
-    analyza_poctu_znaku(text_preparation(TEXTS[1]))
+    analyza_poctu_znaku(text_priprava(TEXTS[1]))
     print('='* 50)
     
 elif user_choice == '3':
     print('Analýza textu č.3:')
-    word_counter(text_preparation(TEXTS[2]))
-    pocet_velkych_pismen(text_preparation(TEXTS[2]))
-    pocet_malych_pismen(text_preparation(TEXTS[2]))
-    pocet_num(text_preparation(TEXTS[2]))
-    suma_num(text_preparation(TEXTS[2]))
+    pocitani_slov(text_priprava(TEXTS[2]))
+    pocet_velkych_pismen(text_priprava(TEXTS[2]))
+    pocet_malych_pismen(text_priprava(TEXTS[2]))
+    pocet_num(text_priprava(TEXTS[2]))
+    suma_num(text_priprava(TEXTS[2]))
     print('='* 50)
-    analyza_poctu_znaku(text_preparation(TEXTS[2]))
+    analyza_poctu_znaku(text_priprava(TEXTS[2]))
     print('='* 50)
     
 else: 
