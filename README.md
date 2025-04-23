@@ -16,8 +16,9 @@ Co program umí:
 
 Jak program pracuje při analýze textu:
 - z knihovny collections je importován Counter - pro počítání četností délky slov
+- z importuje knihovnu string kvůli přípravě textu
 - nejprve je použita fce "text_priprava" jejíž vstupní argument je string (text) a výstupní hodnota list (tento list je dále vstupním argumentem všech dalších fcí)- ze stringu odstraní všechny
-  tečky ('.'), následně čárky (','), následně text rozseká na slova pomocí .split(), výsledný list je uložen do proměnné 'cisty_text', kterou vrací fce
+  interpunkční znaménka a následně text rozseká na slova pomocí .split(), výsledný list je uložen do proměnné 'cisty_text', kterou vrací fce
 - další fce užité v programu:
 - "pocitani_slov" - vstupní argument je list - počítá délku listu - pomocí len(), tedy počet slov, které ukládá do proměnné 'pocet_slov'
 - "pocet_velkych_pismen" - vstupní argument je list - pracuje s pomocnými proměnnými typu int 'pocet_velkych' a 'pouze_velka_pismena', jejichž počáteční hodnoty jsou 0, pomocí for cyklu prochází list a pokud je počáteční pismeno prvku ve stringu 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' inkrementuje hodnotu 'pocet_velkych' o +1, to samé v případě 'pouze_velka_pismena' - zde ale pokud je prvek listu .isupper()
