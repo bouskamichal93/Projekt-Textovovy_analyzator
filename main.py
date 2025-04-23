@@ -4,6 +4,7 @@ projekt_1.py: první projekt do Engeto Online Python Akademie
 author: Michal Bouška
 email: michal.bouska93@gmail.com
 """
+import string
 from collections import Counter
 #DATA
 #registrovaní uživatelé
@@ -44,9 +45,9 @@ TEXTS = [
 #ANALÝZA FCE
 #počítání slov
 def text_priprava(text:str) -> list:
-    text_without_dots = text.replace(".","") #odstraní z textu tečky
-    text_without_commas = text_without_dots.replace(",","") #odstraní z textu čárky
-    cisty_text = text_without_commas.split() #rozbije text na list slov
+    prevadec = str.maketrans('', '', string.punctuation)
+    text_bez_znaku = text.translate(prevadec)
+    cisty_text = text_bez_znaku.split() #rozbije text na list slov
     return cisty_text
 
 def pocitani_slov(text:list) -> int: 
