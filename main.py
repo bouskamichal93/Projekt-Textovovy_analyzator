@@ -6,6 +6,7 @@ email: michal.bouska93@gmail.com
 """
 import string
 from collections import Counter
+
 #DATA
 #registrovaní uživatelé
 users_registered = {
@@ -41,6 +42,11 @@ TEXTS = [
     other freshwater genera and herring similar to those
     in modern oceans. Other fish such as paddlefish,
     garpike and stingray are also present.''']
+
+choice = {
+    '1':TEXTS[0],
+    '2':TEXTS[1],
+    '3':TEXTS[2]}
 
 #FCE
 #příprava textu
@@ -139,11 +145,9 @@ else:
 print('='* 50)
 print(f'Aplikace Textový analizátor vítá uživatele {user_name}')
 print('='* 50)
-
 #KONTROLA UŽIVATELSKÉ VOLBY
 user_choice = str(input('Existují 3 texty, které lze analyzovat.\n\nVyberte prosím jednu z možností 1 až 3: '))
 print('='* 50)
-
 if not user_choice.isdigit():
     print('Zadaná hodnota musí být číslo!!!')
     exit()
@@ -151,19 +155,13 @@ if not user_choice.isdigit():
 elif user_choice.isdigit() and user_choice not in '123':
     print(f'Text číslo {user_choice} neexistuje!!!')
     exit()
-        
-elif user_choice == '1':
-    print('Analýza textu č.1:')
-    analyse(TEXTS[0])
-        
-elif user_choice == '2':
-    print('Analýza textu č.2:')
-    analyse(TEXTS[1])
-    
-elif user_choice == '3':
-    print('Analýza textu č.3:')
-    analyse(TEXTS[2])
-    
+
+else:
+    for x,y in choice.items():
+        if x == user_choice:
+            print(f'Analýza textu č.{x}')
+            analyse(y)    
+
 
     
     
