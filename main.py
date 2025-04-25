@@ -42,85 +42,85 @@ TEXTS = [
     in modern oceans. Other fish such as paddlefish,
     garpike and stingray are also present.''']
 
-#ANALÝZA FCE
+#FCE
+#příprava textu
+def text_preparation(text:str) -> list:
+    translator = str.maketrans('', '', string.punctuation)
+    text_without_punctuation = text.translate(translator)
+    text_clear = text_without_punctuation.split() #rozbije text na list slov
+    return text_clear
+
 #počítání slov
-def text_priprava(text:str) -> list:
-    prevadec = str.maketrans('', '', string.punctuation)
-    text_bez_znaku = text.translate(prevadec)
-    cisty_text = text_bez_znaku.split() #rozbije text na list slov
-    return cisty_text
-
-def pocitani_slov(text:list) -> int: 
-    pocet_slov = len(text)
-    print(f'Ve vybraném textu je {pocet_slov} slov')
-
-#počítání velkých písmen   
-def pocet_velkych_pismen(text:list) -> int:
-    pocet_velkych = 0
-    pouze_velka_pismena = 0 
-    
+def word_counting(text:list) -> int: 
+    word_count = len(text)
+    print(f'Ve vybraném textu je {word_count} slov')
+     
+#počítání slov s velkým písmenem   
+def count_of_uppercase_word(text:list) -> int:
+    upper_count = 0
+    only_upper_count = 0 
     for x in text: 
         b=x[0] # první znak stringu
-        if b in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
-            pocet_velkych += 1
-    
-    for x in text:
+        if b.isupper():
+            upper_count += 1
         if x.isupper():
-            pouze_velka_pismena += 1
-    
-    print(f'Počet slov začínajících velkým písmenem: {pocet_velkych-pouze_velka_pismena}')
-    print(f'Počet slov obsahujících pouze velká písmena: {pouze_velka_pismena}')
-    
-#počítání malých písmen   
-def pocet_malych_pismen(text: list) -> int:  
-    pocet_malych = 0
+            only_upper_count += 1  
+    print(f'Počet slov začínajících velkým písmenem: {upper_count-only_upper_count}')
+    print(f'Počet slov obsahujících pouze velká písmena: {only_upper_count}') 
+      
+#počítání slov s malým písmenem   
+def count_of_lowercase_word(text: list) -> int:  
+    count_lower = 0
     for x in text: 
-        b=x[0]
-        if b in 'abcdefghijklmnopqrstuvwxyz':
-            pocet_malych+=1
-    print(f'Počet slov začínajících malým písmenem: {pocet_malych}')
+        if x.islower():
+            count_lower+=1
+    print(f'Počet slov začínajících malým písmenem: {count_lower}')
     
-def pocet_num(text:list) -> int:  
-    pocet_num = 0
-    for x in text: 
-        b=x[0]
-        if b in '0123456789':
-            pocet_num+=1
-    print(f'Počet numerických stringů: {pocet_num}') 
-    
-def suma_num(text:list) -> int:  
-    suma_cisel = 0
+#analýza čísel
+def digits_analyse(text:list) -> int:  
+    count_numbers = 0
+    sum_number = 0
     numeric_list = []
     for x in text: 
-        b=x[0]
-        if b in '0123456789':
-            numeric_list.append(int(x))        
+        if x.isdigit():
+            count_numbers+=1
+            numeric_list.append(int(x)) 
     for y in numeric_list:
-        suma_cisel += y
-    print(f'Suma všech čísel obsažených v textu: {suma_cisel}') 
-
-def analyza_poctu_znaku(text:list) -> dict:
-    delka_slova = [] #prázdný list do kterého se bude ukládat délka jednotlivých slov
-    for x in text: 
-        delka_slova.append(int((len(x)))) #zjistí délku slova a přidá jí do listu delka_slova
-    delka_slova.sort() #seřadí naplněný list podle velikosti
-    hodnoty = Counter(delka_slova)
+        sum_number+= y
+    print(f'Počet numerických stringů: {count_numbers}')
+    print(f'Suma všech čísel obsažených v textu: {sum_number}')
     
-    hodnoty_dict = dict(hodnoty)        
+#analýza slov
+def word_analyse(text:list) -> dict:
+    word_len = [] #prázdný list do kterého se bude ukládat délka jednotlivých slov
+    for x in text: 
+        word_len.append(int((len(x)))) #zjistí délku slova a přidá jí do listu word_len
+    word_len.sort() #seřadí naplněný list podle velikosti
+    numbers = Counter(word_len)
+    numbers_dict = dict(numbers)        
     print ('DÉLKA SLOVA', 'VÝSKYT', 'POČET', sep='   |   ')
-    for x, y in hodnoty_dict.items():
+    for x, y in numbers_dict.items():
         if x <10:
             print(x,format('*'* y, ' <25'), y, sep=' |')
         else:
             print(x,format('*'* y, ' <26'), y, sep='|')
-        
-#KONTROLA REGISTROVANÉHO UŽIVATELE   
-uzivatelska_jmena = users_registered.keys()
-'''uložení uživatelských jmen do listu jménem uzivatelska_jmena pro následnou kontrolu,
-že se nacházejí v dictionary users_registered'''
+            
+#kompletní analýza    
+def analyse(text:list) -> string:
+    word_counting(text_preparation(text))
+    count_of_uppercase_word(text_preparation(text))
+    count_of_lowercase_word(text_preparation(text))
+    digits_analyse(text_preparation(text))
+    print('='* 50)
+    word_analyse(text_preparation(text))
+    print('='* 50)
 
+#KONTROLA REGISTROVANÉHO UŽIVATELE   
+user_names = users_registered.keys()
+'''uložení uživatelských jmen do listu jménem user_names pro následnou kontrolu,
+že se nacházejí v dictionary users_registered'''
 user_name = str(input('Zadejte uživatelské jméno: '))
-for x in uzivatelska_jmena: 
+for x in user_names: 
     if x == user_name:
         print(f'{user_name} je registrovaný uživatel!!!')
         break
@@ -136,51 +136,35 @@ else:
     print('Heslo je špatně!!!')
     exit()
 
-print('='* 50, '\n')
-print(f'Aplikace Textový analizátor vítá uživatele {user_name} \n')
-print('='* 50, '\n')
+print('='* 50)
+print(f'Aplikace Textový analizátor vítá uživatele {user_name}')
+print('='* 50)
 
-user_choice = str(input('Existují 3 texty, které lze analyzovat.\n\nVyberte prosím jednu z možostí 1 až 3: '))
-print('='* 50, '\n')
-if user_choice not in '0123456789':
+#KONTROLA UŽIVATELSKÉ VOLBY
+user_choice = str(input('Existují 3 texty, které lze analyzovat.\n\nVyberte prosím jednu z možností 1 až 3: '))
+print('='* 50)
+
+if not user_choice.isdigit():
     print('Zadaná hodnota musí být číslo!!!')
     exit()
     
+elif user_choice.isdigit() and user_choice not in '123':
+    print(f'Text číslo {user_choice} neexistuje!!!')
+    exit()
+        
 elif user_choice == '1':
     print('Analýza textu č.1:')
-    pocitani_slov(text_priprava(TEXTS[0]))
-    pocet_velkych_pismen(text_priprava(TEXTS[0]))
-    pocet_malych_pismen(text_priprava(TEXTS[0]))
-    pocet_num(text_priprava(TEXTS[0]))
-    suma_num(text_priprava(TEXTS[0]))
-    print('='* 50)
-    analyza_poctu_znaku(text_priprava(TEXTS[0]))
-    print('='* 50)
-    
+    analyse(TEXTS[0])
+        
 elif user_choice == '2':
     print('Analýza textu č.2:')
-    pocitani_slov(text_priprava(TEXTS[1]))
-    pocet_velkych_pismen(text_priprava(TEXTS[1]))
-    pocet_malych_pismen(text_priprava(TEXTS[1]))
-    pocet_num(text_priprava(TEXTS[1]))
-    suma_num(text_priprava(TEXTS[1]))
-    print('='* 50)
-    analyza_poctu_znaku(text_priprava(TEXTS[1]))
-    print('='* 50)
+    analyse(TEXTS[1])
     
 elif user_choice == '3':
     print('Analýza textu č.3:')
-    pocitani_slov(text_priprava(TEXTS[2]))
-    pocet_velkych_pismen(text_priprava(TEXTS[2]))
-    pocet_malych_pismen(text_priprava(TEXTS[2]))
-    pocet_num(text_priprava(TEXTS[2]))
-    suma_num(text_priprava(TEXTS[2]))
-    print('='* 50)
-    analyza_poctu_znaku(text_priprava(TEXTS[2]))
-    print('='* 50)
+    analyse(TEXTS[2])
     
-else: 
-    print('Tento text neexistuje!!!')
-    exit()
+
+    
     
 
