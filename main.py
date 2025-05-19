@@ -6,6 +6,65 @@ email: michal.bouska93@gmail.com
 """
 import string
 from collections import Counter
+   
+def text_preparation(text:str) -> list:
+        
+    """Vrací list slov z textu bez diakritiky"""
+    translator = str.maketrans('', '', string.punctuation)
+    text_without_punctuation = text.translate(translator)
+    text_clear = text_without_punctuation.split() #rozbije text na list slov
+    return text_clear
+ 
+def text_analyse(text:list) -> int:
+    """Vrací celkový počet slov, počet slov začínajících velkým písmenem, počet slov pouze s velkými písmeny, počet slov s malými písmeny, počet numerických stringů, součet všech čísel v textu a jednoduchý graf zobrazující četnost délek slov."""
+    #počet slov 
+    word_count = len(text)
+    #velká písmena
+    upper_count = 0
+    only_upper_count = 0
+    #malá písmena
+    count_lower = 0
+    #čísla
+    count_numbers = 0
+    sum_number = 0
+    numeric_list = []
+    #analýza slov
+    word_len = [] #prázdný list do kterého se bude ukládat délka jednotlivých slov
+         
+    for x in text: 
+        b=x[0] # první znak stringu
+        if b.isupper():
+            upper_count += 1
+        if x.isupper():
+            only_upper_count += 1 
+        if x.islower():
+            count_lower+=1
+        if x.isdigit():
+            count_numbers+=1
+            numeric_list.append(int(x)) 
+        word_len.append(int((len(x)))) #zjistí délku slova a přidá jí do listu word_len
+            
+    for y in numeric_list:
+        sum_number+= y
+        
+        word_len.sort() #seřadí naplněný list podle velikosti
+        numbers = Counter(word_len)
+        numbers_dict = dict(numbers)
+        
+    print(f'Ve vybraném textu je {word_count} slov')
+    print(f'Počet slov začínajících velkým písmenem: {upper_count-only_upper_count}')
+    print(f'Počet slov obsahujících pouze velká písmena: {only_upper_count}') 
+    print(f'Počet slov začínajících malým písmenem: {count_lower}')
+    print(f'Počet numerických stringů: {count_numbers}')
+    print(f'Suma všech čísel obsažených v textu: {sum_number}')
+    print('='* 50)
+    print ('DÉLKA SLOVA', 'VÝSKYT', 'POČET', sep='   |   ')
+    for x, y in numbers_dict.items():
+        if x <10:
+            print(x,format('*'* y, ' <25'), y, sep=' |')
+        else:
+            print(x,format('*'* y, ' <26'), y, sep='|')
+    print('='* 50)
 
 if __name__ == "__main__":
     #DATA
@@ -44,74 +103,9 @@ if __name__ == "__main__":
         in modern oceans. Other fish such as paddlefish,
         garpike and stingray are also present.''']
 
-
     dict_of_texts = dict()
     cisla_textu = [str(TEXTS.index(i)+1) for i in TEXTS]      
     dict_of_texts = {k:TEXTS.index(v) for (k,v) in zip(cisla_textu, TEXTS)}
-    
-    def text_preparation(text:str) -> list:
-        """Vrací list slov z textu bez diakritiky"""
-        translator = str.maketrans('', '', string.punctuation)
-        text_without_punctuation = text.translate(translator)
-        text_clear = text_without_punctuation.split() #rozbije text na list slov
-        return text_clear
- 
-    def text_analyse(text:list) -> int:
-        """Vrací celkový počet slov, 
-        počet slov začínajících velkým písmenem, 
-        počet slov pouze s velkými písmeny, 
-        počet slov s malými písmeny, 
-        počet numerických stringů,
-        součet všech čísel v textu a
-        jednoduchý graf zobrazující četnost délek slov."""
-        #počet slov 
-        word_count = len(text)
-        #velká písmena
-        upper_count = 0
-        only_upper_count = 0
-        #malá písmena
-        count_lower = 0
-        #čísla
-        count_numbers = 0
-        sum_number = 0
-        numeric_list = []
-        #analýza slov
-        word_len = [] #prázdný list do kterého se bude ukládat délka jednotlivých slov
-         
-        for x in text: 
-            b=x[0] # první znak stringu
-            if b.isupper():
-                upper_count += 1
-            if x.isupper():
-                only_upper_count += 1 
-            if x.islower():
-                count_lower+=1
-            if x.isdigit():
-                count_numbers+=1
-                numeric_list.append(int(x)) 
-            word_len.append(int((len(x)))) #zjistí délku slova a přidá jí do listu word_len
-            
-        for y in numeric_list:
-            sum_number+= y
-        
-        word_len.sort() #seřadí naplněný list podle velikosti
-        numbers = Counter(word_len)
-        numbers_dict = dict(numbers)
-        
-        print(f'Ve vybraném textu je {word_count} slov')
-        print(f'Počet slov začínajících velkým písmenem: {upper_count-only_upper_count}')
-        print(f'Počet slov obsahujících pouze velká písmena: {only_upper_count}') 
-        print(f'Počet slov začínajících malým písmenem: {count_lower}')
-        print(f'Počet numerických stringů: {count_numbers}')
-        print(f'Suma všech čísel obsažených v textu: {sum_number}')
-        print('='* 50)
-        print ('DÉLKA SLOVA', 'VÝSKYT', 'POČET', sep='   |   ')
-        for x, y in numbers_dict.items():
-            if x <10:
-                print(x,format('*'* y, ' <25'), y, sep=' |')
-            else:
-                print(x,format('*'* y, ' <26'), y, sep='|')
-        print('='* 50)
 
     #KONTROLA REGISTROVANÉHO UŽIVATELE   
     user_names = users_registered.keys()
@@ -119,7 +113,7 @@ if __name__ == "__main__":
     že se nacházejí v dictionary users_registered'''
     user_name = str(input('Zadejte uživatelské jméno: '))
     for x in user_names: 
-        if x == user_name:
+        if x in user_name:
             print(f'{user_name} je registrovaný uživatel!!!')
             break
     else:
@@ -153,7 +147,9 @@ if __name__ == "__main__":
         for x,y in dict_of_texts.items():
             if x == user_choice:
                 print(f'Analýza textu č.{x}')
-                text_analyse(text_preparation(TEXTS[y]))    
+                text_analyse(text_preparation(TEXTS[y]))
+                
+       
 
 
         
