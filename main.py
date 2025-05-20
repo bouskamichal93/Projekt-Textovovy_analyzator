@@ -7,8 +7,7 @@ email: michal.bouska93@gmail.com
 import string
 from collections import Counter
    
-def text_preparation(text:str) -> list:
-        
+def text_preparation(text:str) -> list:   
     """Vrací list slov z textu bez diakritiky"""
     translator = str.maketrans('', '', string.punctuation)
     text_without_punctuation = text.translate(translator)
@@ -108,8 +107,6 @@ cisla_textu = [str(TEXTS.index(i)+1) for i in TEXTS]
 dict_of_texts = {k:TEXTS.index(v) for (k,v) in zip(cisla_textu, TEXTS)}
 
 if __name__ == "__main__":
-
-
     #KONTROLA REGISTROVANÉHO UŽIVATELE   
     user_names = users_registered.keys()
     '''uložení uživatelských jmen do listu jménem user_names pro následnou kontrolu,
@@ -122,7 +119,6 @@ if __name__ == "__main__":
     else:
             print(f'{user_name} není registrovaný uživatel!!!')
             exit()
-
     #KONTROLA HESLA
     password = str(input('Zadejte prosím heslo: '))
     if password == users_registered.get(user_name): #kontrola správnosti hesla
@@ -130,7 +126,6 @@ if __name__ == "__main__":
     else:
         print('Heslo je špatně!!!')
         exit()
-
     print('='* 50)
     print(f'Aplikace Textový analizátor vítá uživatele {user_name}')
     print('='* 50)
@@ -141,11 +136,9 @@ if __name__ == "__main__":
     if not user_choice.isdigit():
         print('Zadaná hodnota musí být číslo!!!')
         exit()
-        
     elif user_choice.isdigit() and user_choice not in dict_of_texts.keys():
         print(f'Text číslo {user_choice} neexistuje!!!')
         exit()
-
     else:
         for x,y in dict_of_texts.items():
             if x == user_choice:
