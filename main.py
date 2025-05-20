@@ -46,9 +46,9 @@ def text_analyse(text:list) -> int:
     for y in numeric_list:
         sum_number+= y
         
-        word_len.sort() #seřadí naplněný list podle velikosti
-        numbers = Counter(word_len)
-        numbers_dict = dict(numbers)
+    word_len.sort() #seřadí naplněný list podle velikosti
+    numbers = Counter(word_len)
+    numbers_dict = dict(numbers)
         
     print(f'Ve vybraném textu je {word_count} slov')
     print(f'Počet slov začínajících velkým písmenem: {upper_count-only_upper_count}')
